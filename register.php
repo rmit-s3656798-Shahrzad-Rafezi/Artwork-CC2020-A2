@@ -15,8 +15,30 @@
           <input type="text" placeholder="Enter Username" name="id" required>
         </div>
         <div>
+          <label for="firstname">First Name: </label>
+          <input type="text" placeholder="Enter First Name" name="firstname">
+        </div>
+        <div>
+          <label for="lastname">Last Name: </label>
+          <input type="text" placeholder="Enter Last Name" name="lastname">
+        </div>
+        <div>
+          <label for="sex">Gender: </label>
+          <input type="radio" name="sex" value="female">Female
+          <input type="radio" name="sex" value="male">Male
+          <input type="radio" name="sex" value="other">Other
+        </div>
+        <div>
+          <label for="dob">Date Of Birth: </label>
+          <input type="date" placeholder="Enter your Birthday" name="dob">
+        </div>
+        <div>
           <label for="email">Email: </label>
           <input type="text" placeholder="Enter email" name="email" required>
+        </div>
+        <div>
+          <label for="phone">Phone: </label>
+          <input type="tel" placeholder="Enter phone number" name="phone" required>
         </div>
         <div>
           <label for="password">Password: </label>
@@ -25,14 +47,6 @@
         <div>
           <label for="confirmPassword">Confirm Password: </label>
           <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
-        </div>
-        <div>
-          <label for="gender">Gender: </label>
-          <select name="gender">
-            <option value="m">Male</option>
-            <option value="f">Female</option>
-            <option value="x">Other / Prefer not to say</option>
-          </select>
         </div>
         <button type="submit">Register</button>
       </form>
