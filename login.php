@@ -1,25 +1,38 @@
 <!doctype html>
 <html>
-  <head>
-      <meta charset="UTF-8">
-      <title>Login Page</title>
-      <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <div>
-      <form method="post" action="process_login.php">
-        <label>Login</label>
-        <div>
-          <label for="id">Username: </label>
-          <input type="text" placeholder="Enter Username" name="id" required>
-        </div>
-        <div>
-          <label for="password">Password: </label>
-          <input type="password" placeholder="Enter Password" name="password" required>
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  </body>
-</html>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Page</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container login_form d-flex align-items-center min-vh-100">
+
+    <form method="post" action="process_login.php">
+      <h1>Login</h1>
+
+      <div class="form-group">
+        <label for="id">Username: </label>
+        <input type="text" class="form-control" placeholder="Enter Username" name="id" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password: </label>
+        <input type="password" class="form-control" placeholder="Enter Password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn btn-default">Login</button>
+    </form>
+  </div>
+</body>
+
+</html>

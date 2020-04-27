@@ -2,53 +2,79 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register Page</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="styles.css">
   </head>
 
   <body>
-    <div>
-      <form method="post" action="process_register.php">
-        <label>Register</label>
-        <div>
+    <div class="container d-flex align-items-center min-vh-100">
+    <h1>Register</h1>
+      <form method="post" action="process_register.php" class="col-sm-6 col-sm-offset-3">
+
+        <div class="form-group">
           <label for="id">Username: </label>
-          <input type="text" placeholder="Enter Username" name="id" required>
+          <input type="text" class="form-control" placeholder="Enter Username" name="id" required>
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="firstname">First Name: </label>
-          <input type="text" placeholder="Enter First Name" name="firstname">
+          <input type="text" class="form-control" placeholder="Enter First Name" name="firstname">
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="lastname">Last Name: </label>
-          <input type="text" placeholder="Enter Last Name" name="lastname">
+          <input type="text" class="form-control" placeholder="Enter Last Name" name="lastname">
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="sex">Gender: </label>
-          <input type="radio" name="sex" value="female">Female
-          <input type="radio" name="sex" value="male">Male
-          <input type="radio" name="sex" value="other">Other
+
+          <label class="radio-inline">
+            <input type="radio" name="sex" value="female">Female
+          </label>
+
+          <label class="radio-inline">
+            <input type="radio" name="sex" value="male">Male
+          </label>
+
+          <label class="radio-inline">
+            <input type="radio" name="sex" value="other">Other
+          </label>
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="dob">Date Of Birth: </label>
-          <input type="date" placeholder="Enter your Birthday" name="dob">
+          <input type="date" class="form-control" placeholder="Enter your Birthday" name="dob">
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="email">Email: </label>
-          <input type="text" placeholder="Enter email" name="email" required>
+          <input type="text" class="form-control" placeholder="Enter email" name="email" required>
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="phone">Phone: </label>
-          <input type="tel" placeholder="Enter phone number" name="phone" required>
+          <input type="tel" class="form-control" placeholder="Enter phone number" name="phone" required>
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="password">Password: </label>
-          <input type="password" placeholder="Enter Password" name="password" required>
+          <input type="password" class="form-control" placeholder="Enter Password" name="password" required>
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="confirmPassword">Confirm Password: </label>
-          <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
+          <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword" required>
         </div>
-        <button type="submit">Register</button>
+
+        <button type="submit" class="btn btn-default">Register</button>
       </form>
     </div>
   </body>
