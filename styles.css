@@ -2,12 +2,22 @@ h1 {
     text-align: center;
 }
 
-.container.login_form {
-    padding-top: 200px;
+.login_form {
+    padding-top: 5%;
+    padding-bottom: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: steelblue;
+    display: grid;
+    color: snow;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-form {
-    padding: 10px;
+.login_header{
+    padding-bottom: 30px;
 }
 
 /* Style the counter cards */

@@ -15,10 +15,14 @@
 </head>
 
 <body>
-  <div class="container login_form d-flex align-items-center min-vh-100">
+  <div class="container d-flex align-items-center min-vh-100">
 
-    <form method="post" action="process_login.php">
-      <h1>Login</h1>
+    <div class="jumbotron">
+      <h1 class="text-center">Main Page</h1>
+    </div>
+
+    <form method="post" action="process_login.php" class="login_form ">
+      <h1 class="login_header">Login</h1>
 
       <div class="form-group">
         <label for="id">Username: </label>
