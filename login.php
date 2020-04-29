@@ -15,13 +15,11 @@
 </head>
 
 <body>
-  <div class="container d-flex align-items-center min-vh-100">
+  <div class="container login d-flex align-items-center min-vh-100">
 
-    <div class="jumbotron">
-      <h1 class="text-center">Main Page</h1>
-    </div>
+    <form method="post" action="process_login.php" class="login_form">
+      <span class="glyphicon login glyphicon-log-in"></span>
 
-    <form method="post" action="process_login.php" class="login_form ">
       <h1 class="login_header">Login</h1>
 
       <div class="form-group">
@@ -34,8 +32,10 @@
         <input type="password" class="form-control" placeholder="Enter Password" name="password" required>
       </div>
 
-      <button type="submit" class="btn btn-default">Login</button>
+      <button type="submit" class="btn btn-default login">Login</button>
+      <p class="put-center">Don't have an account?</p><a class="link" href=register.php>Create here</a>
     </form>
+    
   </div>
 </body>
 
