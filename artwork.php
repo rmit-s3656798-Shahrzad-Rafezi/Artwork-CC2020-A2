@@ -1,20 +1,11 @@
 <?php
-// $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
-// or die('Could not connect: ' . pg_last_error());
+$db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
+    or die('Could not connect: ' . pg_last_error());
 
-// $query = "select * from artwork where filename ='{$_GET['filename']}'";
+$query = "select * from artwork where imagename ='{$_GET['filename']}'";
 
-// $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-// while ($row = pg_fetch_row($result)) {
-//     print "<p>ID: {$row['artwork_id']}</p>";
-//     print "<p>UserName: {$row['username']}</p>";
-//     print "<p>Work Title: {$row['title']}</p>";
-//     print "<p>Description: {$row['description']}</p>";
-//     echo "<div class='image'>";
-//     print "<img src='uploads/{$row['filename']}' />";
-//     echo "</div>";
-// }
 ?>
 
 <!doctype html>
@@ -64,15 +55,28 @@
         </nav>
 
         <div class="col-xs-6 col-sm-6 col-md-6">
+            <?php
+                while ($row = pg_fetch_row($result)) {
+                    print "<img src='uploads/{$row[3]}' class='responsive' />";
+                    print "<p>{$row[2]}</p>";
+                }
+            ?>
+            <a href="#" class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-thumbs-up"></span> Like
+            </a>
 
+            <p class="number_of_likes">5</p>
+        </div>
+
+        <!-- <div class="col-xs-6 col-sm-6 col-md-6">
             <img src="module-6.jpg" alt="" class="responsive">
 
             <a href="#" class="btn btn-info btn-lg">
                 <span class="glyphicon glyphicon-thumbs-up"></span> Like
             </a>
-            <p class="number_of_likes">5</p>
 
-        </div>
+            <p class="number_of_likes">5</p>
+        </div> -->
 
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="comment">
