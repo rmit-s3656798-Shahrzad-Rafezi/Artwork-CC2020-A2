@@ -1,23 +1,11 @@
 <?php
 session_start();
-// $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
-// or die('Could not connect: ' . pg_last_error());
+$db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
+    or die('Could not connect: ' . pg_last_error());
 
-// $query = "select * from artwork";
+$query = "select * from artwork";
 
-// $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-// print "<div class='row'>";
-
-// while ($row = pg_fetch_row($result)) {
-//     echo "<div class='col-sm-6 col-md-4'>";
-//     echo "<div class='card'>";
-//     print "<a href='artwork.php?filename={$row['filename']}'><img src='uploads/{$row['filename']}'></a>";
-//     echo "</div>";
-//     echo "</div>";
-// }
-
-// print "</div>";
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 
 <!doctype html>
@@ -68,60 +56,17 @@ session_start();
         </nav>
 
         <div class="row">
-            <div class="col-sm-6 col-md-4">
-                <div class="card">
-                    <img src="module-6.jpg" />
-                    <h3>Card 1</h3>
-                    <p>Some text</p>
-                    <p>Some text</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="card">
-                    <a href="artwork.php"><img src="module-6.jpg" /></a>
-                    <h3>The logo for the club</h3>
-                    <p>Artist: Sherry</p>
-                    <p>Some text</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="card">
-                    <img src="module-6.jpg" />
-                    <h3>Card 3</h3>
-                    <p>Some text</p>
-                    <p>Some text</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="card">
-                    <img src="module-6.jpg" />
-                    <h3>Card 1</h3>
-                    <p>Some text</p>
-                    <p>Some text</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="card">
-                    <img src="module-6.jpg" />
-                    <h3>The logo for the club</h3>
-                    <p>Artist: Sherry</p>
-                    <p>Some text</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="card">
-                    <img src="module-6.jpg" />
-                    <h3>Card 3</h3>
-                    <p>Some text</p>
-                    <p>Some text</p>
-                </div>
-            </div>
-
+            <?php
+            while ($row = pg_fetch_row($result)) {
+                echo "<div class='col-sm-6 col-md-4'>";
+                echo "<div class='card'>";
+                print "<a href='artwork.php?filename={$row[3]}'><img src='uploads/{$row['3']}'></a>";
+                print "<h3>Title: {$row[1]}</h3>";
+                print "<p>Artist: {$row[4]}</p>";
+                echo "</div>";
+                echo "</div>";
+            }
+            ?>
         </div>
 
         <footer>
