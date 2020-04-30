@@ -79,7 +79,7 @@ session_start();
 
             <div class="col-sm-6 col-md-4">
                 <div class="card">
-                    <a href="www.google.com"><img src="module-6.jpg" /></a>
+                    <a href="artwork.php"><img src="module-6.jpg" /></a>
                     <h3>The logo for the club</h3>
                     <p>Artist: Sherry</p>
                     <p>Some text</p>
