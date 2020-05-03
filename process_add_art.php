@@ -8,8 +8,6 @@ session_start();
 
 // AWS Info
 $bucketName = 'artwork-cca2-2020';
-$IAM_KEY = 'ASIAQGNL7YYW52N2FCMU';
-$IAM_SECRET = 'WDt6PoYSL4B7Rf4a17nOqw/RAgelFRGzk15874OS';
 
 // Connect to AWS
 try {
@@ -23,7 +21,10 @@ try {
 }
 
 $keyName = 'uploads/' . basename($_FILES["image"]['name']);
-//$pathInS3 = 'https://s3.us-east-1.amazonaws.com/' . $bucketName . '/' . $keyName;
+
+// Example: https://artwork-cca2-2020.s3.amazonaws.com/uploads/SWITCH_strawberry.png
+// TODO: figure out how to make every image public
+$ImagePath = 'https://'. $bucketName .'.s3.amazonaws.com/'. $keyName;
 
 // Add it to S3
 try {
@@ -60,7 +61,7 @@ move_uploaded_file($location, "uploads/$filename");
 $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
 	or die('Could not connect: ' . pg_last_error());
 
-$query = "insert into artwork (title, description, imagename, artist) values('$title', '$description', '$filename', '$username')";
+$query = "insert into artwork (title, description, imagename, s3pathfile, artist) values('$title', '$description', '$filename', '$ImagePath ', '$username')";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 

@@ -60,9 +60,10 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             while ($row = pg_fetch_row($result)) {
                 echo "<div class='col-sm-6 col-md-4'>";
                 echo "<div class='card'>";
-                print "<a href='artwork.php?filename={$row[3]}'><img src='uploads/{$row['3']}'></a>";
+                //print "<a href='artwork.php?filename={$row[3]}'><img src='uploads/{$row[3]}'></a>";
+                print "<a href='artwork.php?filename={$row[4]}'><img src='{$row[4]}'></a>";
                 print "<h3>Title: {$row[1]}</h3>";
-                print "<p>Artist: {$row[4]}</p>";
+                print "<p>Artist: {$row[5]}</p>";
                 echo "</div>";
                 echo "</div>";
             }
