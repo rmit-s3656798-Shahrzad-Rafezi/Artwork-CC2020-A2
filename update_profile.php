@@ -40,11 +40,6 @@ if (!isset($_SESSION['username'])) {
 
       <h1>Update</h1>
 
-      <div class="form-group">
-        <label for="id">Username: </label>
-        <input type="text" class="form-control" placeholder="Enter Username" name="id" required>
-      </div>
-
       <div class="col-xs-6 col-sm-6 col-md-6">
         <div class="form-group">
           <label for="firstname">First Name: </label>
@@ -82,25 +77,25 @@ if (!isset($_SESSION['username'])) {
 
       <div class="form-group">
         <label for="email">Email: </label>
-        <input type="text" class="form-control" placeholder="Enter email" name="email" required>
+        <input type="text" class="form-control" placeholder="Enter email" name="email">
       </div>
 
       <div class="form-group">
         <label for="phone">Phone: </label>
-        <input type="tel" class="form-control" placeholder="Enter phone number" name="phone" required>
+        <input type="tel" class="form-control" placeholder="Enter phone number" name="phone">
       </div>
 
       <div class="col-xs-6 col-sm-6 col-md-6">
         <div class="form-group">
           <label for="password">Password: </label>
-          <input type="password" class="form-control" placeholder="Enter Password" name="password" required>
+          <input type="password" class="form-control" placeholder="Enter Password" name="password">
         </div>
       </div>
 
       <div class="col-xs-6 col-sm-6 col-md-6">
         <div class="form-group">
           <label for="confirmPassword">Confirm Password: </label>
-          <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword" required>
+          <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword">
         </div>
       </div>
 
