@@ -61,7 +61,7 @@ move_uploaded_file($location, "uploads/$filename");
 $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
 	or die('Could not connect: ' . pg_last_error());
 
-$query = "insert into artwork (title, description, imagename, s3pathfile, artist) values('$title', '$description', '$filename', '$ImagePath ', '$username')";
+$query = "INSERT INTO artwork (title, description, imagename, s3pathfile, artist) VALUES('$title', '$description', '$filename', '$ImagePath ', '$username')";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 

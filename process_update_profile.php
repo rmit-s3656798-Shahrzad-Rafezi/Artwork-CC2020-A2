@@ -17,7 +17,7 @@ $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.c
     or die('Could not connect: ' . pg_last_error());
 
 // Define the query
-$query = "select * from users where username = '$username' and password = '$password'";
+$query = "UPDATE users SET lastname='Doe' WHERE username ='{$_SESSION['username']}'";
 
 // Run an insert query
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());

@@ -17,7 +17,7 @@
 
     // Define the query
     // TODO: Find a way to make the password secure
-    $query = "insert into users values('$username', '$first_name ', '$last_name', '$sex', '$password', '$email', '$dob', '$phone')";
+    $query = "INSERT INTO users VALUES('$username', '$first_name ', '$last_name', '$sex', '$password', '$email', '$dob', '$phone')";
 
     // Run an insert query
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());

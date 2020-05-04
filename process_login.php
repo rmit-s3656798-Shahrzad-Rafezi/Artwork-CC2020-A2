@@ -9,7 +9,7 @@
     or die('Could not connect: ' . pg_last_error());
 
     // Define the query
-    $query = "select * from users where username = '$username' and password = '$password'";
+    $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 
     // Run an insert query
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());

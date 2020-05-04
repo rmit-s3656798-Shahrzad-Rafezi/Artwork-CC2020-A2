@@ -3,7 +3,7 @@ session_start();
 $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
     or die('Could not connect: ' . pg_last_error());
 
-$query = "select * from artwork";
+$query = "SELECT * FROM artwork";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
