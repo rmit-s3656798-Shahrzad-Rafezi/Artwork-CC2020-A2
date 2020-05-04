@@ -49,7 +49,7 @@ if (!isset($_SESSION['username'])) {
                         print "<li><a href=register.php><span class='glyphicon glyphicon-user'></span> Sign Up</a></li>";
                         print "<li><a href=login.php><span class='glyphicon glyphicon-log-in'></span> Login</a></li>";
                     } else {
-                        print "<li><a href=update.php><span class='glyphicon glyphicon-user'></span> Update Profile</a></li>";
+                        print "<li><a href=view_profile.php><span class='glyphicon glyphicon-user'></span> Profile</a></li>";
                         print "<li><a href=logout.php><span class='glyphicon glyphicon-log-in'></span> Logout</a></li>";
                     }
                     ?>
