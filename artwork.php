@@ -3,6 +3,7 @@ $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.c
     or die('Could not connect: ' . pg_last_error());
 
 $query = "select * from artwork where imagename ='{$_GET['filename']}'";
+//$query = "select * from artwork where s3pathfile ='{$_GET['filename']}'";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
@@ -30,14 +31,13 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             <h1 class="text-center">Art Work</h1>
         </div>
 
-        <?php
-        include("nav.inc");
-        ?>
+        <?php include("nav.inc"); ?>
 
         <div class="col-xs-6 col-sm-6 col-md-6">
             <?php
                 while ($row = pg_fetch_row($result)) {
-                    print "<img src='uploads/{$row[3]}' class='responsive' />";
+                    //print "<img src='uploads/{$row[3]}' class='responsive' />";
+                    print "<img src='{$row[4]}' class='responsive' />";
                     print "<p>{$row[2]}</p>";
                 }
             ?>
