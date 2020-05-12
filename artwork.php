@@ -35,11 +35,11 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         <div class="col-xs-6 col-sm-6 col-md-6">
             <?php
-                while ($row = pg_fetch_row($result)) {
-                    //print "<img src='uploads/{$row[3]}' class='responsive' />";
-                    print "<img src='{$row[4]}' class='responsive' />";
-                    print "<p>{$row[2]}</p>";
-                }
+            while ($row = pg_fetch_row($result)) {
+                //print "<img src='uploads/{$row[3]}' class='responsive' />";
+                print "<img src='{$row[4]}' class='responsive' />";
+                print "<p>{$row[2]}</p>";
+            }
             ?>
             <a href="#" class="btn btn-info btn-lg">
                 <span class="glyphicon glyphicon-thumbs-up"></span> Like
@@ -59,13 +59,19 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         </div> -->
 
         <div class="col-xs-6 col-sm-6 col-md-6">
-            <div class="comment">
-                <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;">
+
+            <form action="post_details.php" method="post" id="comment_form">
+                <textarea name="comment_text" id="comment_text" class="form-control" cols="3" rows="3" style="margin-bottom: 5px"></textarea>
+                <button class="btn btn-primary btn-sm pull-right" id="submit_comment">Submit comment</button>
+            </form>
+
+            <div class="comment" style="margin-top: 40px">
+                <h5>Mark Dang</h5>
                 <p>Oh wow I love your art work</p>
                 <span class="time-right">11:00</span>
             </div>
             <div class="comment">
-                <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;">
+                <h5>Gemma Ruse</h5>
                 <p>This is truly amazing</p>
                 <span class="time-right">12:00</span>
             </div>
