@@ -23,7 +23,7 @@ $artwork_id_result1 = pg_query($artwork_id_query1) or die('Query failed: ' . pg_
 $comment_text = $_POST['comment_text'];
 $username = $_SESSION['username'];
 
-if(isset($comment_text)){
+if (isset($comment_text)) {
     while ($row = pg_fetch_row($artwork_id_result1)) {
         $artwork_id = (int) $row[0];
         $query = "INSERT INTO comments (username, artwork_id, comment) VALUES ('$username', '$artwork_id', '$comment_text')";
@@ -78,28 +78,17 @@ if(isset($comment_text)){
                 <textarea name="comment_text" id="comment_text" class="form-control" cols="3" rows="3" style="margin-bottom: 5px"></textarea>
                 <button class="btn btn-primary btn-sm pull-right" id="submit_comment">Submit comment</button>
             </form>
-
-            <?php
-            while ($comment = pg_fetch_row($comments)) {
-                echo "<div class='comment'>";
-                print "<h5>{$comment[1]}</h5>";
-                print "<p>{$comment[3]}</p>";
-                echo "</div>";
-            }
-            ?>
-
-            <!-- <div class="comment" style="margin-top: 40px">
-                <h5>Mark Dang</h5>
-                <p>Oh wow I love your art work</p>
-                <span class="time-right">11:00</span>
+            <div id="comments-wrapper">
+                <?php
+                while ($comment = pg_fetch_row($comments)) {
+                    echo "<div class='comment'>";
+                    print "<h5>{$comment[1]}</h5>";
+                    print "<p>{$comment[3]}</p>";
+                    echo "</div>";
+                }
+                ?>
             </div>
-            <div class="comment">
-                <h5>Gemma Ruse</h5>
-                <p>This is truly amazing</p>
-                <span class="time-right">12:00</span>
-            </div> -->
         </div>
-
     </div>
     <!-- <script src="scripts.js"></script> -->
 </body>
