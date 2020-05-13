@@ -7,9 +7,11 @@ $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.c
 $get_artwork_query = "SELECT * FROM artwork WHERE imagename ='{$_GET['filename']}'";
 $get_artwork_result = pg_query($get_artwork_query) or die('Query failed: ' . pg_last_error());
 
+// Gets the artwork id for displaying the comments
 $artwork_id_query = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
 $artwork_id_result = pg_query($artwork_id_query) or die('Query failed: ' . pg_last_error());
 
+// Displays comments
 while ($row = pg_fetch_row($artwork_id_result)) {
     $comments_query = "SELECT * FROM comments WHERE artwork_id = {$row[0]}";
     $comments = pg_query($comments_query) or die('Query failed: ' . pg_last_error());
@@ -18,13 +20,17 @@ while ($row = pg_fetch_row($artwork_id_result)) {
 $artwork_id_query1 = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
 $artwork_id_result1 = pg_query($artwork_id_query1) or die('Query failed: ' . pg_last_error());
 
-while ($row = pg_fetch_row($artwork_id_result1)) {
-    $artwork_id = (int) $row[0];
-    $comment_text = $_POST['comment_text'];
-    $username = $_SESSION['username'];
-    $query = "INSERT INTO comments (username, artwork_id, comment) VALUES ('$username', '$artwork_id', '$comment_text')";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+$comment_text = $_POST['comment_text'];
+$username = $_SESSION['username'];
+
+if(isset($comment_text)){
+    while ($row = pg_fetch_row($artwork_id_result1)) {
+        $artwork_id = (int) $row[0];
+        $query = "INSERT INTO comments (username, artwork_id, comment) VALUES ('$username', '$artwork_id', '$comment_text')";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    }
 }
+
 ?>
 
 <!doctype html>
