@@ -156,6 +156,12 @@ img {
     margin-left: auto;
     margin-right: auto;
 }
+#comments-wrapper{
+    overflow: auto;
+    height: 350px;
+    margin-top: 40px;
+}
+
 
 .number_of_likes{
     font-size: 40px;
