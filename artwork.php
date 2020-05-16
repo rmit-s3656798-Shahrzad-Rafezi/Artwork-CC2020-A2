@@ -7,11 +7,11 @@ $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.c
 $get_artwork_query = "SELECT * FROM artwork WHERE imagename ='{$_GET['filename']}'";
 $get_artwork_result = pg_query($get_artwork_query) or die('Query failed: ' . pg_last_error());
 
-// Gets the artwork id for displaying the comments
+// Gets the artwork id for displaying the comments and likes
 $artwork_id_query = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
 $artwork_id_result = pg_query($artwork_id_query) or die('Query failed: ' . pg_last_error());
 
-// Displays comments
+// Displays comments 
 while ($row = pg_fetch_row($artwork_id_result)) {
     $comments_query = "SELECT * FROM comments WHERE artwork_id = {$row[0]}";
     $comments = pg_query($comments_query) or die('Query failed: ' . pg_last_error());
@@ -20,17 +20,38 @@ while ($row = pg_fetch_row($artwork_id_result)) {
 $artwork_id_query1 = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
 $artwork_id_result1 = pg_query($artwork_id_query1) or die('Query failed: ' . pg_last_error());
 
+// Add Comments
 $comment_text = $_POST['comment_text'];
 $username = $_SESSION['username'];
 
 if (isset($comment_text)) {
     while ($row = pg_fetch_row($artwork_id_result1)) {
         $artwork_id = (int) $row[0];
-        $query = "INSERT INTO comments (username, artwork_id, comment) VALUES ('$username', '$artwork_id', '$comment_text')";
+        $query = "INSERT INTO comments(username, artwork_id, comment) VALUES ('$username', '$artwork_id', '$comment_text')";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     }
 }
 
+$artwork_id_query2 = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
+$artwork_id_result2 = pg_query($artwork_id_query2) or die('Query failed: ' . pg_last_error());
+
+// Display likes
+while ($row = pg_fetch_row($artwork_id_result2)) {
+    $likes_query = "SELECT COUNT(username) as total FROM likes WHERE artwork = {$row[0]}";
+    $likes = pg_query($likes_query) or die('Query failed: ' . pg_last_error());
+}
+
+// Add Likes
+$artwork_id_query3 = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
+$artwork_id_result3 = pg_query($artwork_id_query3) or die('Query failed: ' . pg_last_error());
+
+if (array_key_exists('like_button', $_POST)) {
+    while ($row = pg_fetch_row($artwork_id_result3)) {
+        $artwork_id = (int) $row[0];
+        $add_like = "INSERT INTO likes (username, artwork) VALUES ('$username', '$artwork_id')";
+        $add_like_result = pg_query($add_like) or die('Query failed: ' . pg_last_error());
+    }
+}
 ?>
 
 <!doctype html>
@@ -60,37 +81,45 @@ if (isset($comment_text)) {
         <div class="col-xs-6 col-sm-6 col-md-6">
             <?php
             while ($artwork = pg_fetch_row($get_artwork_result)) {
-                //print "<img src='uploads/{$row[3]}' class='responsive' />";
-                print "<img src='{$artwork[4]}' class='responsive' />";
-                print "<p>{$artwork[2]}</p>";
+                print "<img src='{$artwork[4]}' class='responsive' />"; //gets the image
+                print "<p>Description: {$artwork[2]}</p>"; //gets the description
             }
             ?>
-            <a href="#" class="btn btn-info btn-lg">
+            <div class="display_likes">
+                <form method="post">
+                    <input class="btn btn-info btn-lg" id='like_button' type='submit' name='like_button' value='Like' />
+                </form>
+
+                <?php
+                while ($like = pg_fetch_row($likes)) {
+                    print " <p class='number_of_likes'>{$like[0]}</p>";
+                }
+                ?>
+            </div>
+            <!-- <a href="#" class="btn btn-info btn-lg">
                 <span class="glyphicon glyphicon-thumbs-up"></span> Like
             </a>
-
-            <p class="number_of_likes">5</p>
+            <p class="number_of_likes">5</p> -->
         </div>
 
         <div class="col-xs-6 col-sm-6 col-md-6">
 
-            <form method="post" id="comment_form">
+            <form method="post">
                 <textarea name="comment_text" id="comment_text" class="form-control" cols="3" rows="3" style="margin-bottom: 5px"></textarea>
-                <button class="btn btn-primary btn-sm pull-right" id="submit_comment">Submit comment</button>
+                <button class="btn btn-info btn-lg">Submit comment</button>
             </form>
             <div id="comments-wrapper">
                 <?php
                 while ($comment = pg_fetch_row($comments)) {
                     echo "<div class='comment'>";
-                    print "<h5>{$comment[1]}</h5>";
-                    print "<p>{$comment[3]}</p>";
+                    print "<h5>{$comment[1]}</h5>"; // gets the username
+                    print "<p>{$comment[3]}</p>"; // gets the comment
                     echo "</div>";
                 }
                 ?>
             </div>
         </div>
     </div>
-    <!-- <script src="scripts.js"></script> -->
 </body>
 
 </html>
