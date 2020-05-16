@@ -31,16 +31,13 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             <h1 class="text-center">Welcome!</h1>
         </div>
 
-        <?php
-        include("nav.inc");
-        ?>
+        <?php include("nav.inc");?>
 
         <div class="row">
             <?php
             while ($row = pg_fetch_row($result)) {
                 echo "<div class='col-sm-6 col-md-4'>";
                 echo "<div class='card'>";
-                //print "<a href='artwork.php?filename={$row[3]}'><img src='uploads/{$row[3]}'></a>";
                 print "<a href='artwork.php?filename={$row[3]}'><img src='{$row[4]}'></a>";
                 print "<h3>Title: {$row[1]}</h3>";
                 print "<p>Artist: {$row[5]}</p>";
