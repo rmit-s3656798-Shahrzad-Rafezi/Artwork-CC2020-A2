@@ -47,9 +47,22 @@ $artwork_id_result3 = pg_query($artwork_id_query3) or die('Query failed: ' . pg_
 
 if (array_key_exists('like_button', $_POST)) {
     while ($row = pg_fetch_row($artwork_id_result3)) {
+        //Gets all the users from table "likes"
         $artwork_id = (int) $row[0];
-        $add_like = "INSERT INTO likes (username, artwork) VALUES ('$username', '$artwork_id')";
-        $add_like_result = pg_query($add_like) or die('Query failed: ' . pg_last_error());
+        $users = "SELECT username FROM likes WHERE artwork = $artwork_id";
+        $users_result = pg_query($users) or die('Query failed: ' . pg_last_error());
+        
+        while ($user = pg_fetch_row($users_result)) {
+            if ($user[0] == $username) {
+                $message = "<div class='alert alert-danger' role='alert'>You already liked it</div>";
+            } else {
+                while ($row = pg_fetch_row($artwork_id_result3)) {
+                    $artwork_id = (int) $row[0];
+                    $add_like = "INSERT INTO likes (username, artwork) VALUES ('$username', '$artwork_id')";
+                    $add_like_result = pg_query($add_like) or die('Query failed: ' . pg_last_error());
+                }
+            }
+        }
     }
 }
 ?>
@@ -88,6 +101,7 @@ if (array_key_exists('like_button', $_POST)) {
             <div class="display_likes">
                 <form method="post">
                     <input class="btn btn-info btn-lg" id='like_button' type='submit' name='like_button' value='Like' />
+                    <?php echo $message; ?>
                 </form>
 
                 <?php
