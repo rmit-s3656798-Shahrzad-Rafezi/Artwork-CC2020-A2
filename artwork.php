@@ -45,6 +45,9 @@ while ($row = pg_fetch_row($artwork_id_result2)) {
 $artwork_id_query3 = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
 $artwork_id_result3 = pg_query($artwork_id_query3) or die('Query failed: ' . pg_last_error());
 
+$artwork_id_query4 = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename']}'";
+$artwork_id_result4 = pg_query($artwork_id_query4) or die('Query failed: ' . pg_last_error());
+
 if (array_key_exists('like_button', $_POST)) {
     while ($row = pg_fetch_row($artwork_id_result3)) {
         //Gets all the users from table "likes"
@@ -55,8 +58,9 @@ if (array_key_exists('like_button', $_POST)) {
         while ($user = pg_fetch_row($users_result)) {
             if ($user[0] == $username) {
                 $message = "<div class='alert alert-danger' role='alert'>You already liked it</div>";
-            } else {
-                while ($row = pg_fetch_row($artwork_id_result3)) {
+            } 
+            elseif($user[0] != $username) {
+                while ($row = pg_fetch_row($artwork_id_result4)) {
                     $artwork_id = (int) $row[0];
                     $add_like = "INSERT INTO likes (username, artwork) VALUES ('$username', '$artwork_id')";
                     $add_like_result = pg_query($add_like) or die('Query failed: ' . pg_last_error());
