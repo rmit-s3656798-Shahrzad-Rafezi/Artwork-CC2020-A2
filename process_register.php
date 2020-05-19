@@ -1,4 +1,17 @@
 <?php
+
+    require 'vendor/autoload.php';
+
+    use Aws\Lambda\LambdaClient;
+
+    $client = LambdaClient::factory([
+    'version' => 'latest',
+    'region'  => 'us-east-1',
+    'profile' => 'default',
+    ]);
+
+
+    
     // TODO: Be able  to check if the input is not empty and make some fields required
     $username = $_POST['id'];
     $first_name = $_POST['firstname'];
@@ -9,6 +22,8 @@
     $phone = $_POST['phone'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
+    
+    
 
     // Connect to the db server
     // TODO: Find a way to not display the host and the password in here
@@ -21,6 +36,19 @@
 
     // Run an insert query
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    
+
+    $user_data = array($username, $first_name, $last_name, $email);
+    $result2 = $client->invoke([
+        'FunctionName' => 'arn:aws:lambda:us-east-1:013967530451:function:HelloWorldPython',
+        'InvocationType' => 'Event',
+        'LogType' => 'Tail',
+        'Payload' => json_encode($user_data),
+    ]); 
+    $promise = $client->invokeAsync([
+        'FunctionName' => 'arn:aws:lambda:us-east-1:013967530451:function:HelloWorldPython',
+        'InvokeArgs' => json_encode($user_data),
+    ]);
 
     // Redirect to home page
     header("Location:homepage.php");
