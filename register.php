@@ -16,7 +16,7 @@
 
 <body>
   <div class="container register d-flex align-items-center min-vh-100">
-    <form method="post" action="process_register.php" class="register_form">
+    <form method="post" action="register_confirm.php" class="register_form">
 
     <span class="glyphicon register glyphicon-user"></span>
       <h1>Register</h1>

@@ -1,29 +1,64 @@
 <?php
-
+    session_start();
     require 'vendor/autoload.php';
 
     use Aws\Lambda\LambdaClient;
+    use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 
-    $client = LambdaClient::factory([
+    if (!isset($_SESSION['registerData'])) {
+        echo "go to register";
+        // header("Location:register.php");
+        exit(0);
+    }
+    if (!isset($_POST['verify'])) {
+        echo "go to register confirm";
+        // header("Location:register_confirm.php");
+        exit(0);
+    }
+    
+
+    $clientLambda = LambdaClient::factory([
     'version' => 'latest',
     'region'  => 'us-east-1',
     'profile' => 'default',
     ]);
 
+    $clientCognito = new CognitoIdentityProviderClient([ 
+        'version' => 'latest',
+        'region'  => 'us-east-1',
+        'profile' => 'default',
+            
+        'app_client_id' => '4g2h44ft1ums13l1v36g3sdapq',
+        'user_pool_id' => 'us-east-1_rGEhLRyIM',
+    ]);
 
     
     // TODO: Be able  to check if the input is not empty and make some fields required
-    $username = $_POST['id'];
-    $first_name = $_POST['firstname'];
-    $last_name = $_POST['lastname'];
-    $sex = $_POST['sex'];
-    $dob = $_POST['dob'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
+    $username = $_SESSION['registerData']['username'];
+    $first_name = $_SESSION['registerData']['first_name'];
+    $last_name = $_SESSION['registerData']['last_name'];
+    $sex = $_SESSION['registerData']['sex'];
+    $dob = $_SESSION['registerData']['dob'];
+    $email = $_SESSION['registerData']['email'];
+    $phone = $_SESSION['registerData']['phone'];
+    $password = $_SESSION['registerData']['password'];
+    $confirmPassword = $_SESSION['registerData']['confirmPassword'];
     
-    
+    try {
+        $clientCognito->confirmSignUp([
+            'ClientId' => '4g2h44ft1ums13l1v36g3sdapq',
+            'Username' => $_SESSION['registerData']['username'],
+            'ConfirmationCode' => $_POST['verify'],
+      ]);
+    } catch (CodeMismatchException $e) {
+        $_SESSION['verifyError'] = "The code didn't match, please try again";
+        header("Location:register_confirm.php");
+        exit(0); }
+    // } catch (exception $e) {
+    //     $_SESSION['verifyError'] = "An error has occured, please try again";
+    //     header("Location:register_confirm.php");
+    //     exit(0);
+    // }
 
     // Connect to the db server
     // TODO: Find a way to not display the host and the password in here
@@ -39,13 +74,13 @@
     
 
     $user_data = array($username, $first_name, $last_name, $email);
-    $result2 = $client->invoke([
+    $result2 = $clientLambda->invoke([
         'FunctionName' => 'arn:aws:lambda:us-east-1:013967530451:function:HelloWorldPython',
         'InvocationType' => 'Event',
         'LogType' => 'Tail',
         'Payload' => json_encode($user_data),
     ]); 
-    $promise = $client->invokeAsync([
+    $promise = $clientLambda->invokeAsync([
         'FunctionName' => 'arn:aws:lambda:us-east-1:013967530451:function:HelloWorldPython',
         'InvokeArgs' => json_encode($user_data),
     ]);
