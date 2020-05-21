@@ -20,7 +20,8 @@
 
     <span class="glyphicon register glyphicon-user"></span>
       <h1>Register</h1>
-
+      <?php session_start();
+      if (isset($_SESSION['registerError'])){ echo "<p>".$_SESSION['registerError']."</p>";}?>
       <div class="form-group">
         <label for="id">Username: </label>
         <input type="text" class="form-control" placeholder="Enter Username" name="id" required>

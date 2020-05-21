@@ -6,13 +6,11 @@
     use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 
     if (!isset($_SESSION['registerData'])) {
-        echo "go to register";
-        // header("Location:register.php");
+        header("Location:register.php");
         exit(0);
     }
     if (!isset($_POST['verify'])) {
-        echo "go to register confirm";
-        // header("Location:register_confirm.php");
+        header("Location:register_confirm.php");
         exit(0);
     }
     
@@ -50,15 +48,11 @@
             'Username' => $_SESSION['registerData']['username'],
             'ConfirmationCode' => $_POST['verify'],
       ]);
-    } catch (CodeMismatchException $e) {
-        $_SESSION['verifyError'] = "The code didn't match, please try again";
+    } catch (exception $e) {
+        $_SESSION['verifyError'] = $e->getAwsErrorMessage();
         header("Location:register_confirm.php");
-        exit(0); }
-    // } catch (exception $e) {
-    //     $_SESSION['verifyError'] = "An error has occured, please try again";
-    //     header("Location:register_confirm.php");
-    //     exit(0);
-    // }
+        exit(0);
+    }
 
     // Connect to the db server
     // TODO: Find a way to not display the host and the password in here

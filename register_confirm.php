@@ -1,7 +1,7 @@
 <?php
     session_start();
     require 'vendor/autoload.php';
-
+    $_SESSION['registerError'] = null;
     use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 
     if (!isset($_SESSION['registerData']) ){
@@ -14,8 +14,8 @@
             !isset($_POST['password']) ||
             !isset($_POST['confirmPassword']) ||
             strcmp($_POST['password'],$_POST['confirmPassword']) != 0){
-                echo "go to register";
-                // header("Location:register.php");
+                $_SESSION['registerError'] = "Data input incorrectly, please try again";
+                header("Location:register.php");
                 exit(0);
         }
         $registerData = array(
@@ -41,28 +41,34 @@
         'user_pool_id' => 'us-east-1_rGEhLRyIM',
     ]);
     if (!isset($_SESSION['verifyError'])) {
-        $result = $clientCognito->signUp([
-            'ClientId' => '4g2h44ft1ums13l1v36g3sdapq', // REQUIRED
-            'Password' => $_SESSION['registerData']['password'], // REQUIRED
-            'Username' => $_SESSION['registerData']['username'], // REQUIRED
-            'UserAttributes' => [
-                [
-                'Name' => 'name',
-                'Value' => $_SESSION['registerData']['username']
-                ],
-                [
-                'Name' => 'email',
-                'Value' => $_SESSION['registerData']['email']
-                ]
-            ],
-            'ValidationData' => [
-                [
-                    'Name' => 'email', // REQUIRED
-                    'Value' => $_SESSION['registerData']['email'],
-                ],
-                // ...
-            ],
-        ]);
+      try {
+          $result = $clientCognito->signUp([
+              'ClientId' => '4g2h44ft1ums13l1v36g3sdapq', // REQUIRED
+              'Password' => $_SESSION['registerData']['password'], // REQUIRED
+              'Username' => $_SESSION['registerData']['username'], // REQUIRED
+              'UserAttributes' => [
+                  [
+                  'Name' => 'name',
+                  'Value' => $_SESSION['registerData']['username']
+                  ],
+                  [
+                  'Name' => 'email',
+                  'Value' => $_SESSION['registerData']['email']
+                  ]
+              ],
+              'ValidationData' => [
+                  [
+                      'Name' => 'email', // REQUIRED
+                      'Value' => $_SESSION['registerData']['email'],
+                  ],
+              ],
+          ]);
+      } catch (exception $e) {
+        $_SESSION['registerError'] = "An error has occured, please try again";
+        $_SESSION['registerError'] = $e->getAwsErrorMessage();
+        header("Location:register.php");
+        exit(0);
+      }
     }        
 ?>
 
@@ -88,7 +94,7 @@
 
     <span class="glyphicon register glyphicon-user"></span>
       <h1>Confirm Account Creation</h1>
-      <?php if (isset($_SESSION['verifyError'])) echo "<p>".$_SESSION['verifyError']."</p>";?>
+      <?php if (isset($_SESSION['verifyError'])){ echo "<p>".$_SESSION['verifyError']."</p>";}?>
       <div class="form-group">
         <label for="verify">Verification Code: </label>
         <input type="text" class="form-control" placeholder="Enter Verification Code" name="verify" required>
