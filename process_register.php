@@ -4,6 +4,8 @@
 
     use Aws\Lambda\LambdaClient;
     use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
+    /////Added this package
+    use Aws\Exception\AwsException;
 
     if (!isset($_SESSION['registerData'])) {
         header("Location:register.php");
@@ -48,7 +50,8 @@
             'Username' => $_SESSION['registerData']['username'],
             'ConfirmationCode' => $_POST['verify'],
       ]);
-    } catch (exception $e) {
+      /////fixed the error I was getting that says "getAwsErrorMessage" doesn't exist
+    } catch (AwsException $e) {
         $_SESSION['verifyError'] = $e->getAwsErrorMessage();
         header("Location:register_confirm.php");
         exit(0);
