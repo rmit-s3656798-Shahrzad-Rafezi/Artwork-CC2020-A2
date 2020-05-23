@@ -3,7 +3,9 @@
     require 'vendor/autoload.php';
     $_SESSION['registerError'] = null;
     use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
-
+    /////Added this package
+    use Aws\Exception\AwsException;
+    
     if (!isset($_SESSION['registerData']) ){
         if (!isset($_POST['id']) ||
             !isset($_POST['firstname']) ||
@@ -63,7 +65,7 @@
                   ],
               ],
           ]);
-      } catch (exception $e) {
+      } catch (AwsException $e) {
         $_SESSION['registerError'] = "An error has occured, please try again";
         $_SESSION['registerError'] = $e->getAwsErrorMessage();
         header("Location:register.php");
