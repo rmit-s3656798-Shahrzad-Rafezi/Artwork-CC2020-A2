@@ -37,7 +37,7 @@
     $clientCognito = new CognitoIdentityProviderClient([ 
         'version' => 'latest',
         'region'  => 'us-east-1',
-        'profile' => 'default',
+        // 'profile' => 'default',
             
         'app_client_id' => '4g2h44ft1ums13l1v36g3sdapq',
         'user_pool_id' => 'us-east-1_rGEhLRyIM',
@@ -66,7 +66,6 @@
               ],
           ]);
       } catch (AwsException $e) {
-        $_SESSION['registerError'] = "An error has occured, please try again";
         $_SESSION['registerError'] = $e->getAwsErrorMessage();
         header("Location:register.php");
         exit(0);

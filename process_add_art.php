@@ -6,13 +6,29 @@ use Aws\S3\Exception\S3Exception;
 
 session_start();
 
+
+if (isset($_SESSION['username']) &&
+	isset($_POST['title'])) {
+		$username = $_SESSION['username'];
+		$title = $_POST['title'];	
+} else {
+	header("Location:add_art.php");
+	exit(0);
+}
+if (isset($_POST['category'])) {
+	$category = $_POST['category'];
+}
+if (isset($_POST['description'])) {
+	$description = $_POST['description'];
+}
+
 // AWS Info
 $bucketName = 'artwork-cca2-2020';
 
 // Connect to AWS
 try {
     $s3 = new S3Client([
-        'profile' => 'default',
+        // 'profile' => 'default',
         'region' => 'us-east-1',
         'version' => 'latest'
     ]);
@@ -32,6 +48,7 @@ try {
 	$file = $_FILES["image"]['tmp_name'];
 	$s3->putObject(
 		array(
+			'ACL' => 'public-read-write',
 			'Bucket' => $bucketName,
 			'Key' =>  $keyName,
 			'SourceFile' => $file,
@@ -41,27 +58,15 @@ try {
 	die('Error:' . $e->getMessage());
 }
 
-if (isset($_SESSION['username']))
-	$username = $_SESSION['username'];
-if (isset($_POST['title']))
-	$title = $_POST['title'];
-if (isset($_POST['category']))
-	$category = $_POST['category'];
-if (isset($_POST['description']))
-	$description = $_POST['description'];
 
 // This is for adding it to database	
 $filename = $_FILES['image']['name'];
-$location = $_FILES['image']['tmp_name'];
-
-// Move the file
-move_uploaded_file($location, "uploads/$filename");
 
 // Put data into database
 $db = pg_connect("host=database-cc2020-a2.cjkzs400xcx4.us-east-1.rds.amazonaws.com dbname=artwork user=postgres password=FNH06upJc34i3hrm5h")
 	or die('Could not connect: ' . pg_last_error());
 
-$query = "INSERT INTO artwork (title, description, imagename, s3pathfile, artist) VALUES('$title', '$description', '$filename', '$ImagePath ', '$username')";
+$query = "INSERT INTO artwork (title, description, imagename, s3pathfile, artist) VALUES('$title', '$description', '$filename', '$ImagePath', '$username')";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
