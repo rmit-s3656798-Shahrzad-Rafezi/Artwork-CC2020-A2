@@ -21,8 +21,12 @@ $artwork_id_query1 = "SELECT id FROM artwork WHERE imagename ='{$_GET['filename'
 $artwork_id_result1 = pg_query($artwork_id_query1) or die('Query failed: ' . pg_last_error());
 
 // Add Comments
-$comment_text = $_POST['comment_text'];
-$username = $_SESSION['username'];
+if (isset($_POST['comment_text'])) {
+    $comment_text = $_POST['comment_text'];
+}
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+}
 
 if (isset($comment_text)) {
     while ($row = pg_fetch_row($artwork_id_result1)) {
@@ -88,7 +92,6 @@ if (array_key_exists('like_button', $_POST)) {
             <div class="display_likes">
                 <form method="post">
                     <input class="btn btn-info btn-lg" id='like_button' type='submit' name='like_button' value='Like' />
-                    <?php echo $message; ?>
                 </form>
 
                 <?php

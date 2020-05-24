@@ -20,7 +20,7 @@
     $clientLambda = LambdaClient::factory([
     'version' => 'latest',
     'region'  => 'us-east-1',
-    'profile' => 'default',
+    // 'profile' => 'default',
     ]);
 
     $clientCognito = new CognitoIdentityProviderClient([ 
